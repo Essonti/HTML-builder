@@ -2,7 +2,11 @@ const fs = require('fs');
 const fsProm = require('fs/promises')
 const path = require('path')
 
-fs.unlink ('./05-merge-styles/project-dist/bundle.css', (err) => {if(err) throw err;})
+fs.access('./05-merge-styles/project-dist/bundle.css', (err) => {
+    if(!err) {
+        fs.unlink('./05-merge-styles/project-dist/bundle.css', (err) => {if(err) throw err})
+    }
+})
 fs.readdir('./05-merge-styles/styles/', {withFileTypes: true}, (err, files) => {
 
     files.forEach(file => {
