@@ -46,9 +46,18 @@ input.on('data', chunk => {
 })
 
 fs.readdir('./06-build-page/styles/', {withFileTypes: true}, (err, files) => {
-    let firstElem = files[0]
-    files.shift();
-    files.push(firstElem);
+    files.forEach(el => {
+        if (el.name === 'header.css') {
+            let firstPart = files.slice(0, files.indexOf(el))
+            files = files.slice(files.indexOf(el))
+            files.push(firstPart);
+            files = files.flat()
+        }
+    })
+    //Alternative
+    // let firstElem = files[0]
+    // files.shift();
+    // files.push(firstElem);
     files.forEach(file => {
         if(file.isFile() && path.extname(file.name) === '.css') {
             const input = fs.createReadStream(path.join('./06-build-page/styles/', file.name), 'utf-8')
