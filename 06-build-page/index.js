@@ -14,14 +14,11 @@ fs.access('./06-build-page/project-dist/style.css', (err) => {
     }
 })
 
-const inputHeader = fs.createReadStream('./06-build-page/components/header.html', 'utf-8')
-const inputArticles = fs.createReadStream('./06-build-page/components/articles.html', 'utf-8')
-const inputFooter = fs.createReadStream('./06-build-page/components/footer.html', 'utf-8')
+fsProm.mkdir('./06-build-page/project-dist/', {recursive: true})
 const input = fs.createReadStream('./06-build-page/template.html', 'utf-8')
-let tagArr = [], chunkMod, chunkInput, replacer, result, tagExt, tag
+let tagArr = [], chunkMod, chunkInput, replacer, result 
 
 input.on('data', chunk => {
-    fsProm.mkdir('./06-build-page/project-dist/', {recursive: true})
     chunkMod = chunk.slice(0);
     chunkInput = chunk.slice(0);
     while (chunkMod.indexOf('}}') !== -1) {
@@ -70,11 +67,11 @@ fs.readdir('./06-build-page/styles/', {withFileTypes: true}, (err, files) => {
 
 try {
 function copyAssets () {
-    fsProm.mkdir('./06-build-page/project-dist/assets/fonts', {recursive: true})
-    fsProm.mkdir('./06-build-page/project-dist/assets/img', {recursive: true})
-    fsProm.mkdir('./06-build-page/project-dist/assets/svg', {recursive: true})
-
-    fs.readdir('./06-build-page/assets/fonts', (err, files) => {
+    fsProm.mkdir('./06-build-page/project-dist/assets/', {recursive: true})
+    fsProm.mkdir('./06-build-page/project-dist/assets/fonts/', {recursive: true})
+    fsProm.mkdir('./06-build-page/project-dist/assets/img/', {recursive: true})
+    fsProm.mkdir('./06-build-page/project-dist/assets/svg/', {recursive: true})
+    fsProm.readdir('./06-build-page/assets/fonts', (err, files) => {
         files.forEach(file => {
             fsProm.copyFile(path.join('./06-build-page/assets/fonts', file), path.join('./06-build-page/project-dist/assets/fonts', file))
         })
